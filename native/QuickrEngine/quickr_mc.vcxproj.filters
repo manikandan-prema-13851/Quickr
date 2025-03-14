@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{56675e3f-f696-478d-9535-0c99a963b3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\models">
+      <UniqueIdentifier>{3e7fd04f-a4bf-4e6e-beac-83a8e78cff53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\workers">
+      <UniqueIdentifier>{4d4933a7-8448-4525-9f06-ee77e4aa169e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\thread_timer">
+      <UniqueIdentifier>{4493cb4e-3125-4e42-9d9b-33741ef847ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\queue">
+      <UniqueIdentifier>{46f02ec4-bdaf-4da3-a96a-85a2f8fbe670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\services">
+      <UniqueIdentifier>{2ff821df-83bb-4ca3-89f5-884e7f8a8006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\services\BatchProcessor">
+      <UniqueIdentifier>{73b7cf2d-460c-41c1-ab9c-58f38eca36d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\scanner">
+      <UniqueIdentifier>{c26e15fa-5f14-4058-bc56-7dea21ce49ac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Quickr\QuickrEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\models\FileMeta.cpp">
+      <Filter>Source Files\Components\models</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\services\BatchProcessor\BatchProcessor.cpp">
+      <Filter>Source Files\Components\services\BatchProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\thread_timer\ThreadTimer.cpp">
+      <Filter>Source Files\Components\thread_timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\workers\Worker.cpp">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\workers\WorkerManager.cpp">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClCompile>
+    <ClCompile Include="Quickr\scanner\PEScanner.cpp">
+      <Filter>Source Files\Components\scanner</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Quickr\QuickrEngine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\models\FileMeta.h">
+      <Filter>Source Files\Components\models</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\services\BatchProcessor\BatchProcessor.h">
+      <Filter>Source Files\Components\services\BatchProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\queue\Queue.h">
+      <Filter>Source Files\Components\queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\thread_timer\ThreadTimer.h">
+      <Filter>Source Files\Components\thread_timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\workers\Worker.h">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\workers\WorkerManager.h">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\scanner\PEScanner.h">
+      <Filter>Source Files\Components\scanner</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\FeatureExtractor">
+      <UniqueIdentifier>{e296313a-42b0-4d23-9640-b42eda0da069}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FeatureExtactor">
+      <UniqueIdentifier>{dd537d06-731a-4719-929a-572477825963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PatternScanner">
+      <UniqueIdentifier>{dad252b8-7a48-4abf-b5b7-ccab9a9d9e20}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="asn_parse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fileExt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenericLL.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oid.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pe_hash.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="signature.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileParser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="embeded.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fUtil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureExtractor\cMalwareDetails.c">
+      <Filter>Source Files\FeatureExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureExtractor\CoffHeaderArr.c">
+      <Filter>Source Files\FeatureExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureExtractor\DataAlign_Hash.c">
+      <Filter>Source Files\FeatureExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureExtractor\LinkedList.c">
+      <Filter>Source Files\FeatureExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureExtractor\OptionalHeader1.c">
+      <Filter>Source Files\FeatureExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternScanner\PatternScanner.c">
+      <Filter>Source Files\PatternScanner</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="asn1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="errors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fileExt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fileSigningDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GenericLL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="md.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pe_hash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="signature.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="embeded.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureExtractor\cMalwareDetails.h">
+      <Filter>Header Files\FeatureExtactor</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureExtractor\CoffHeaderArr.h">
+      <Filter>Header Files\FeatureExtactor</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureExtractor\DataAlign_Hash.h">
+      <Filter>Header Files\FeatureExtactor</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureExtractor\FeatureHeader.h">
+      <Filter>Header Files\FeatureExtactor</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureExtractor\OptionalHeader.h">
+      <Filter>Header Files\FeatureExtactor</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternScanner\PatternScanner.h">
+      <Filter>Source Files\PatternScanner</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

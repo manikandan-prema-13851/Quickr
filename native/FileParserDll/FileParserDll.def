@@ -1,0 +1,11 @@
+LIBRARY FileParser
+EXPORTS 
+	initPEParserDWrapper
+	startPEDWrapper
+	printImgDetailsDWrapper
+	freeImgDetailsDWrapper
+	getAllFilesFileParserDWrapper
+	freePEParserStructDWrapper
+	FPSha256CalculationWrapper
+	getAllFilesFileParserDWrapperW
+	initRuleEngineDLLWrapper

@@ -1,0 +1,14 @@
+**/.vs
+**/Debug
+**/Release
+*.tlog
+*.log
+*.obj
+*.pdb
+**/yara-4.5.1-modified
+native/Lib*
+**/packages
+**/yara-4.5.1
+**/dataset
+**/need-to-debug
+**/CatchData

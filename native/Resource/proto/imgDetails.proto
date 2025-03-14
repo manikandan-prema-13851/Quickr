@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+message malwareClassifierAnalysis{
+	int32 		multifamilyResult				=	1;
+	float 		BenignProb 		  				=	2;
+	float		DownloaderInstallerDropperProb  =	3;
+	float 		FlooderInfectorVirusProb   		=	4; 
+	float		RansomwareProb    				= 	5;
+	float 		SpywareStealerProb 				=	6;
+	float 		WormProb						=	7;
+	float 		BackdoorProb        			=	8;
+	float 		GenericProb 					= 	9;
+	float 		ImportProb						=	10;
+	float 		featureProb 					=	11;
+	float 		combineProb 					=	12;
+	int32 		binaryModelResult 				= 	13;
+}
+message ImgDetails{
+    
+	bytes publisher 			= 1;
+	bytes CataFile 			= 2;
+	bytes TimeStamp 			= 3; 
+	bytes VSignChainversion 	= 4;
+	bytes DigestAlgorithm 	= 5;
+	bytes Imphase_hash 		= 6;
+	bytes imphash_string 	= 7;
+	bytes Permission 			= 8;
+	bytes Company 			= 9;
+	bytes Description 		= 10;
+	bytes Product 			= 11;
+	bytes InternalName 		= 12;
+	bytes CopyRights 			= 13;
+	bytes Orgfilename 		= 14;
+	bytes ProductVersion 		= 15;
+	bytes FileVersion 		= 16;
+	bytes Mimetype 			= 17;
+	bytes filetypeext 		= 18;
+	bytes Writetime 			= 19;
+	bytes Accesstime 			= 20;
+	bytes Createtime 			= 21;
+	bytes MD5LE_buffer 		= 22;
+	bytes SHA1_buffer 		= 23;
+	bytes SHA256_buffer 		= 24;
+	bytes SHA512_buffer 		= 25;
+	bytes status 				= 26;
+	bytes 	thumbprint			= 27;
+	bytes 	sign_alg			= 28;
+	int32  		fileSize 			= 29;
+	int32  		Signtype 			= 30;
+	int32  		NumberofCertChains 	= 31;
+	int32  		Characteristics 	= 32;
+	int32  		Filetype 			= 33;
+	int32  		Binarytime 			= 34;
+	int32  		BinaryType 			= 35;
+	int32  		MachineType 		= 36;
+	int32      	isMalware           = 37;
+	float      	confidence          = 38;
+	int32		impMalware			= 39;				// deprecated
+	int32 		featureMalware		= 40;				// deprecated
+	// ProcessRecord ProcessRecord 	= 41;				deprecated
+	bytes		filePath 			= 42; 
+	int32 		ErrorCode 			= 43;
+	malwareClassifierAnalysis MCAnalysis = 44;
+	bytes		importFunctionstring = 45;
+	// Suppression suppression = 46;					// supprssion
+	bytes	properFilePath =47;
+	bytes	patternstring = 48;
+	int32		patternOffset = 49;
+	bytes	ErrorCodestring = 50;
+	bytes		importArray = 51;
+	bytes		featureArray = 52;
+}
+

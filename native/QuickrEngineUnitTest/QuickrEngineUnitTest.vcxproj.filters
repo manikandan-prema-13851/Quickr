@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="SourceFiles">
+      <UniqueIdentifier>{c3d809a6-9ee8-4bc6-86ce-4a03ff5f0518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\TestUtils">
+      <UniqueIdentifier>{81a9e052-8ae1-43b4-96cd-a3a0d194467a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BatchProcessorTest.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="FileMetaTest.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkerTest.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="QueueTest.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUtils.cpp">
+      <Filter>SourceFiles\TestUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="PEScannerTest.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>SourceFiles</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestUtils.h">
+      <Filter>SourceFiles\TestUtils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

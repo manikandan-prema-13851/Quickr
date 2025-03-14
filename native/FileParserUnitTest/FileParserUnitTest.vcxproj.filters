@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{5562eb42-ab21-4102-8ce1-c1c9376a5d9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileParserUtils">
+      <UniqueIdentifier>{79d4ea7f-e4bd-4ce0-8576-cd131b6e5b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Test_case_part_1">
+      <UniqueIdentifier>{55c220d9-4cd6-49fb-b7a5-12e72690c514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\proto">
+      <UniqueIdentifier>{6777dfa3-f26c-46d9-9c05-7b24afdead7e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Test_1_FileParser.cpp">
+      <Filter>Source Files\Test_case_part_1</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUtils.h">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FileParserUtils.cpp">
+      <Filter>Source Files\FileParserUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Resource\proto\imgDetails.pb.cc">
+      <Filter>Source Files\proto</Filter>
+    </ClCompile>
+    <ClCompile Include="CatchFileCreate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Resource\proto\imgDetails.pb.h">
+      <Filter>Source Files\proto</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
