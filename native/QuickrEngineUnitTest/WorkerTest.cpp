@@ -22,7 +22,7 @@ TEST(Worker, Init) {
     std::thread workerThread{ &Worker::start, &worker };
 
 
-    auto tmpDir = quickrmc::test::GetTempDirectoryPath();
+    auto tmpDir = quickrengine::test::GetTempDirectoryPath();
     auto randomFilePath = tmpDir;
 
     randomFilePath.append(L"random-file");
@@ -59,13 +59,13 @@ TEST(Worker, processEntry) {
     Worker worker{ workQueue, resultQueue, id};
 
 
-    auto tmpDir = quickrmc::test::GetTempDirectoryPath();
+    auto tmpDir = quickrengine::test::GetTempDirectoryPath();
     tmpDir = tmpDir + L"filesaver_worker_test_" +  std::to_wstring(std::chrono::system_clock::now().time_since_epoch().count());
 
     auto randomFilePath = tmpDir;
 
-    quickrmc::test::removeDirectory(tmpDir);
-    assert(quickrmc::test::createDirectory(tmpDir));
+    quickrengine::test::removeDirectory(tmpDir);
+    EXPECT_TRUE(quickrengine::test::createDirectory(tmpDir));
 
     std::wstring randomFilePath1 = tmpDir + L"\\random-file1.txt";
     std::wstring randomFilePath2 = tmpDir + L"\\random-file2.txt";
@@ -87,5 +87,5 @@ TEST(Worker, processEntry) {
     EXPECT_TRUE(resultQueue->size() == 1);
     EXPECT_TRUE(workQueue->size() == 2);
 
-    quickrmc::test::removeDirectory(tmpDir);
+    quickrengine::test::removeDirectory(tmpDir);
 }

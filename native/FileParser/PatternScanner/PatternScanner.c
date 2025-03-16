@@ -89,85 +89,102 @@ __declspec(noinline) int scanRuleEngine(struct PEImgDetails* data, LPVOID fp) {
 
 // init pattern engine if success return 0 else return 1
 __declspec(noinline) int initRuleEngineInternal(const wchar_t* compiled_rules_file) {
-	patternRuleInitFlag = false;
-	if (patternRules != NULL) {
-		unInitRuleEngine(patternRules);
-	}
-	patternRules = NULL;
-	if (yr_initialize() != ERROR_SUCCESS) {
-		printf("Failed to initialize the Engine\n");
-		return EXIT_FAILURE;
-	}
-	const wchar_t* rules_ext = getFileExternsionW(compiled_rules_file);
-	patternRules = (struct RULE_ENGINE*)calloc(1, sizeof(RULE_ENGINE));
-	if (wcscmp(rules_ext, L"yc") == 0 || wcscmp(rules_ext, L"yarac") == 0) { // Load compiled rules
-		YR_STREAM stream;
-		FILE* fp = _wfopen(compiled_rules_file, L"rb");
-		if (fp == NULL) {
-			wprintf(L"Failed to open rule file: %s \n", compiled_rules_file);
-			return EXIT_FAILURE;
-		}
-		stream.user_data = fp;
-		stream.read = (YR_STREAM_READ_FUNC)fread;
+    patternRuleInitFlag = false;
+    if (patternRules != NULL) {
+        unInitRuleEngine(patternRules);
+    }
+    patternRules = NULL;
+    if (yr_initialize() != ERROR_SUCCESS) {
+        printf("Failed to initialize the Engine\n");
+        return EXIT_FAILURE;
+    }
+    const wchar_t* rules_ext = getFileExternsionW(compiled_rules_file);
+    patternRules = (struct RULE_ENGINE*)calloc(1, sizeof(RULE_ENGINE));
+    if (patternRules == NULL) {
+        printf("Failed to allocate memory for pattern rules\n");
+        yr_finalize();
+        return EXIT_FAILURE;
+    }
 
-		if (yr_rules_load_stream(&stream, (YR_RULES**)&patternRules) != ERROR_SUCCESS) {
-			printf("Failed to load compiled rules from file\n");
-			yr_finalize();
-			if (fp != NULL) {
-				fclose(fp);
-			}
-			return EXIT_FAILURE;
-		}
+    if (wcscmp(rules_ext, L"yc") == 0 || wcscmp(rules_ext, L"yarac") == 0) {
+        YR_STREAM stream;
+        FILE* fp = _wfopen(compiled_rules_file, L"rb");
+        if (fp == NULL) {
+            wprintf(L"Failed to open rule file: %s \n", compiled_rules_file);
+            free(patternRules);  
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
+        stream.user_data = fp;
+        stream.read = (YR_STREAM_READ_FUNC)fread;
 
-		if (fp != NULL)
-			fclose(fp);
+        if (yr_rules_load_stream(&stream, (YR_RULES**)&patternRules) != ERROR_SUCCESS) {
+            printf("Failed to load compiled rules from file\n");
+            if (fp != NULL) {
+                fclose(fp);
+            }
+            free(patternRules); 
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
 
-	}
+        if (fp != NULL)
+            fclose(fp);
+    }
+    else if (wcscmp(rules_ext, L"yar") == 0) {  
+        YR_COMPILER* compiler = NULL;
 
-	else if (wcscmp(rules_ext, L"yar") == 0) {  // Compile and load regular rules
+        if (yr_compiler_create(&compiler) != ERROR_SUCCESS) {
+            printf("Failed to create YARA compiler\n");
+            free(patternRules); 
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
+        FILE* fp = _wfopen(compiled_rules_file, L"rb");
+        if (fp == NULL) {
+            wprintf(L"Failed to open rule file: %s \n", compiled_rules_file);
+            yr_compiler_destroy(compiler);
+            free(patternRules);  
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
 
-		YR_COMPILER* compiler = NULL;
+        if (yr_compiler_add_file(compiler, fp, NULL, (const char*)compiled_rules_file) != ERROR_SUCCESS) {
+            wprintf(L"Failed to compile rule file: %s\n", compiled_rules_file);
+            fclose(fp);
+            yr_compiler_destroy(compiler);
+            free(patternRules); 
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
 
-		if (yr_compiler_create(&compiler) != ERROR_SUCCESS) {
-			printf("Failed to create YARA compiler\n");
-			yr_finalize();
-			return EXIT_FAILURE;
-		}
-		FILE* fp = _wfopen(compiled_rules_file, L"rb");
-		if (fp == NULL) {
-			wprintf(L"Failed to open rule file: %s \n", compiled_rules_file);
-			yr_compiler_destroy(compiler);
-			yr_finalize();
-			return EXIT_FAILURE;
-		}
+        if (fp != NULL) {
+            fclose(fp);
+        }
 
-		if (yr_compiler_add_file(compiler, fp, NULL, (const char*)compiled_rules_file) != ERROR_SUCCESS) {
-			wprintf(L"Failed to compile rule file: %s\n", compiled_rules_file);
-			fclose(fp);
-			yr_compiler_destroy(compiler);
-			yr_finalize();
-			return EXIT_FAILURE;
-		}
+        if (yr_compiler_get_rules(compiler, (YR_RULES**)&patternRules) != ERROR_SUCCESS) {
+            fprintf(stderr, "Failed to get compiled rules\n");
+            yr_compiler_destroy(compiler);
+            free(patternRules); 
+            patternRules = NULL;
+            yr_finalize();
+            return EXIT_FAILURE;
+        }
+        yr_compiler_destroy(compiler);
+    }
+    else {
+        wprintf(L"Unsupported rule file extension: %ls\n", rules_ext);
+        free(patternRules); 
+        patternRules = NULL;
+        yr_finalize();
+        return EXIT_FAILURE;
+    }
 
-		if (fp != NULL) {
-			fclose(fp);
-		}
-
-
-		if (yr_compiler_get_rules(compiler, (YR_RULES**)&patternRules) != ERROR_SUCCESS) {
-			fprintf(stderr, "Failed to get compiled rules\n");
-			yr_compiler_destroy(compiler);
-			yr_finalize();
-			return EXIT_FAILURE;
-		}
-		yr_compiler_destroy(compiler);
-	}
-	else {
-		wprintf(L"Unsupported rule file extension: %ls\n", rules_ext);
-		yr_finalize();
-		return EXIT_FAILURE;
-	}
-	
-	patternRuleInitFlag = true;
-	return EXIT_SUCCESS;
+    patternRuleInitFlag = true;
+    return EXIT_SUCCESS;
 }

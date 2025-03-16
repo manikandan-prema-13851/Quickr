@@ -7,18 +7,18 @@
 extern "C"
 {
 #include "FileParser.h"
-#include "../FeatureExtractor/FeatureHeader.h"
+#include "FeatureExtractor/FeatureHeader.h"
 }
 
 int fileCount = 0;
 
-typedef int (*initPEParserDLL)(MalwareDetectionEngine* , wchar_t*);
-typedef struct PEImgDetails* (*startPEDLL)(wchar_t*, MalwareDetectionEngine* malDetEngine);
+typedef int (*initPEParserDLL)(wchar_t*);
+typedef struct PEImgDetails* (*startPEDLL)(wchar_t*, ScannerConfig* malDetEngine);
 typedef int (*printImgDetailsDLL)(struct PEImgDetails*, int);
 typedef void (*freeImgDetailsDLL)(struct PEImgDetails*);
-typedef int (*getAllFilesFileParserDLL)(const wchar_t*, BOOL,MalwareDetectionEngine*, int);
+typedef int (*getAllFilesFileParserDLL)(const wchar_t*, BOOL, ScannerConfig*, int);
 typedef int  (*freePEParserStructDLL)(Tree_t**, struct ExtNode**, struct hashTableMalwareFullFunc*);
-typedef int (*initRuleEngineDLL)(MalwareDetectionEngine*, wchar_t*);
+typedef int (*initRuleEngineDLL)(ScannerConfig*, wchar_t*);
 HINSTANCE hinstMC = NULL;
 initPEParserDLL initPEParserDLLApi;
 startPEDLL startPEDLLApi;
@@ -79,15 +79,14 @@ int wmain(int argc, wchar_t** argv)
 	//system("PAUSE");
 	//int printDetails = atoi(argv[2]);
 	int printDetails = 1;
-	MalwareDetectionEngine malDetEngine = { 0 };
+	ScannerConfig malDetEngine = { 0 };
 	FileParserLoad(L"FileParserDll.dll");
 
 	clock_t begin;
 
 	//int initPEParserFlag = initPEParser(&TrustedCAtree, &root, &mapMalwareFullFunc);
 	wchar_t* winTrustedCertificatePath = (wchar_t*)L"Resource\\WinTrustedCertificates";
-	int initPEParserFlag = initPEParserDLLApi(&malDetEngine, winTrustedCertificatePath);
-	int initRuleEngineFlag = initRuleEngineDLLApi(&malDetEngine, argv[1]);
+	int initPEParserFlag = initPEParserDLLApi(winTrustedCertificatePath);
 
 	malDetEngine.mcScanFlag = 1;
 	malDetEngine.yaraScanFlag = 1;
@@ -96,10 +95,7 @@ int wmain(int argc, wchar_t** argv)
 		printf("Warning: Something Get Wrong InitFailed\n");
 		return EXIT_FAILURE;
 	}
-	if (initRuleEngineFlag == 1) {
-		printf("Warning: Something Get Wrong InitFailed\n");
-		return EXIT_FAILURE;
-	}
+
 	HANDLE fileHandle = CreateFileW(
 		baseDir,                    // File path
 		GENERIC_READ,               // Open for reading

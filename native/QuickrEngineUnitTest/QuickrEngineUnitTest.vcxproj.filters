@@ -1,41 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="SourceFiles">
-      <UniqueIdentifier>{c3d809a6-9ee8-4bc6-86ce-4a03ff5f0518}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SourceFiles\TestUtils">
-      <UniqueIdentifier>{81a9e052-8ae1-43b4-96cd-a3a0d194467a}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BatchProcessorTest.cpp">
-      <Filter>SourceFiles</Filter>
+    <ClCompile Include="TestUtils.cpp">
+      <Filter>Source Files\TestUtils</Filter>
     </ClCompile>
     <ClCompile Include="FileMetaTest.cpp">
-      <Filter>SourceFiles</Filter>
+      <Filter>Source Files\Components\models</Filter>
     </ClCompile>
     <ClCompile Include="WorkerTest.cpp">
-      <Filter>SourceFiles</Filter>
+      <Filter>Source Files\Components\workers</Filter>
     </ClCompile>
-    <ClCompile Include="QueueTest.cpp">
-      <Filter>SourceFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="TestUtils.cpp">
-      <Filter>SourceFiles\TestUtils</Filter>
+    <ClCompile Include="BatchProcessorTest.cpp">
+      <Filter>Source Files\Components\services\BatchProcessor</Filter>
     </ClCompile>
     <ClCompile Include="PEScannerTest.cpp">
-      <Filter>SourceFiles</Filter>
+      <Filter>Source Files\Components\scanner</Filter>
+    </ClCompile>
+    <ClCompile Include="QueueTest.cpp">
+      <Filter>Source Files\Components\queue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <Filter>SourceFiles</Filter>
-    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c12129bd-127d-4cb1-aa45-35560e298ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{c0cc7e64-e12e-4b1f-8d96-d3ea7f726c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TestUtils">
+      <UniqueIdentifier>{8f010d72-72d1-4c7a-b0c9-a80ab3f896e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\models">
+      <UniqueIdentifier>{1215dd2e-4b65-4658-a0fd-af0027364dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\queue">
+      <UniqueIdentifier>{d027b328-1018-4a41-a113-6c1150cee2b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\scanner">
+      <UniqueIdentifier>{e15b3865-fda3-4e3a-951f-6ff7d5bce9c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\services">
+      <UniqueIdentifier>{0b377f66-4fc8-40f4-b4bb-68a44a4bd0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\thread_timer">
+      <UniqueIdentifier>{5004d12e-c95b-426f-92ae-258b3cde2307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\workers">
+      <UniqueIdentifier>{9b619037-15f0-47a6-a477-cd5e2ccf2444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\services\BatchProcessor">
+      <UniqueIdentifier>{3476e2bf-6f56-4181-97dc-8ce27329047c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestUtils.h">
-      <Filter>SourceFiles\TestUtils</Filter>
+      <Filter>Source Files\TestUtils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

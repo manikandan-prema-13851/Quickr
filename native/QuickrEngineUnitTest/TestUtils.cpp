@@ -1,7 +1,7 @@
 #include "TestUtils.h"
 
 
-namespace quickrmc::test {
+namespace quickrengine::test {
 
     std::wstring GetTempDirectoryPath()
 

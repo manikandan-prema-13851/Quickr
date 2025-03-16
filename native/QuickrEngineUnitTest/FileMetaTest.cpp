@@ -5,7 +5,7 @@
 
 TEST(FileEntryTest, CanTellTheSizeOfFiles) {
 
-    std::wstring tempFilePath = quickrmc::test::GetTempFilePath();
+    std::wstring tempFilePath = quickrengine::test::GetTempFilePath();
     HANDLE hFile = CreateFileW(tempFilePath.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
     EXPECT_NE(hFile , INVALID_HANDLE_VALUE);
 
@@ -29,7 +29,7 @@ TEST(FileEntryTest, CanTellTheSizeOfFiles) {
 }
 
 TEST(FileEntryTest, CanTellTheSizeOfDirectories) {
-    std::wstring tempFilePath = quickrmc::test::GetTempDirectoryPath();
+    std::wstring tempFilePath = quickrengine::test::GetTempDirectoryPath();
 	CreateDirectoryW(tempFilePath.c_str(), nullptr);
 	WIN32_FILE_ATTRIBUTE_DATA fileData;
 	EXPECT_TRUE(GetFileAttributesExW(tempFilePath.c_str(), GetFileExInfoStandard, &fileData));
@@ -45,7 +45,7 @@ TEST(FileEntryTest, CanTellTheSizeOfDirectories) {
 
 
 TEST(FileEntryTest, CanListDirectoryChildren) {
-	std::wstring tempDirPath = quickrmc::test::GetTempDirectoryPath();
+	std::wstring tempDirPath = quickrengine::test::GetTempDirectoryPath();
 	CreateDirectoryW(tempDirPath.c_str(), nullptr);
 	std::wstring tempFile1 = tempDirPath + L"\\file1.txt";
 	std::wstring tempFile2 = tempDirPath + L"\\file2.txt";

@@ -5,14 +5,11 @@
 
 
 
-__declspec(dllexport)int  initPEParserDWrapper(MalwareDetectionEngine* malDetEngine, wchar_t* winTrustedCertificatePath) {
-    return initPEParser(malDetEngine);
+__declspec(dllexport)int  initPEParserDWrapper(wchar_t* patternPath) {
+    return initPEParser(patternPath);
 }
 
-__declspec(dllexport)int  initRuleEngineDLLWrapper(MalwareDetectionEngine* malDetEngine, wchar_t* ruleFile) {
-    return initRuleEngine(malDetEngine);
-}
-__declspec(dllexport) struct PEImgDetails* startPEDWrapper(wchar_t* filePath, MalwareDetectionEngine* malDetEngine) {
+__declspec(dllexport) struct PEImgDetails* startPEDWrapper(wchar_t* filePath, ScannerConfig* malDetEngine) {
     HANDLE fileHandle = CreateFile(
         filePath,
         GENERIC_READ,
@@ -80,12 +77,12 @@ __declspec(dllexport) void freeImgDetailsDWrapper(struct PEImgDetails* data) {
 	freeImgDetails(data);
 }
 
-__declspec(dllexport) int getAllFilesFileParserDWrapperW(wchar_t* rootDir, BOOL subDirectories, MalwareDetectionEngine* malDetEngine, int printDetails) {
+__declspec(dllexport) int getAllFilesFileParserDWrapperW(wchar_t* rootDir, BOOL subDirectories, ScannerConfig* malDetEngine, int printDetails) {
 	return getAllFilesFileParserW(rootDir, subDirectories, malDetEngine, printDetails);
 }
 
 
-__declspec(dllexport) int getAllFilesFileParserDWrapper(const char* rootDir, BOOL subDirectories, MalwareDetectionEngine* malDetEngine, int printDetails) {
+__declspec(dllexport) int getAllFilesFileParserDWrapper(const char* rootDir, BOOL subDirectories, ScannerConfig* malDetEngine, int printDetails) {
 	return getAllFilesFileParser(rootDir, subDirectories, malDetEngine, printDetails);
 }
 

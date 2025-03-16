@@ -15,7 +15,7 @@ namespace quickrengine {
         {
             assert(workQueue != nullptr);
 
-            auto maybeFile = workQueue->frontWithTimeout(std::chrono::milliseconds(10000));
+            auto maybeFile = workQueue->frontWithTimeout(std::chrono::milliseconds(10));
             // handle worker queue 
             if (maybeFile)
             {
@@ -42,13 +42,11 @@ namespace quickrengine {
             resultQueue->push(fileEntry);
             return;
         }
-        std::wcout << _filePath << std::endl;
         auto fileEntry = FileMeta::fromPath(_filePath);
         filesProcessed += 1;
 
         auto& children = fileEntry->children();
         fileEntry->threadId = running_id;
-
         resultQueue->push(fileEntry);
         for (const auto& child : children)
         {

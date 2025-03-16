@@ -17,7 +17,7 @@ struct Task {
     }
 };
 
-TEST(WorkQueueTest, CanPushItemsThenPopThemOut) {
+TEST(QueueTest, CanPushItemsThenPopThemOut) {
     quickrengine::queue::Queue<Task> pq;
 
     EXPECT_EQ(pq.size(), 0);
@@ -41,7 +41,7 @@ TEST(WorkQueueTest, CanPushItemsThenPopThemOut) {
     EXPECT_EQ(pq.size(), 0); 
 }
 
-TEST(WorkQueueTest, CanWaitUntilItemsAreAdded) {
+TEST(QueueTest, CanWaitUntilItemsAreAdded) {
     quickrengine::queue::Queue<Task> pq;
 
     EXPECT_EQ(pq.size(), 0);
@@ -69,6 +69,8 @@ TEST(WorkQueueTest, CanWaitUntilItemsAreAdded) {
         std::this_thread::sleep_for(std::chrono::milliseconds(210));
 
         EXPECT_EQ(future1.get().name , "High Priority Task");
+        EXPECT_EQ(future2.get().name, "Medium Priority Task");
+
 
         EXPECT_EQ(pq.size(), 0);
         std::this_thread::sleep_for(std::chrono::milliseconds(300));

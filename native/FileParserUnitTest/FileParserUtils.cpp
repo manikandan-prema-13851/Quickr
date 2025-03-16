@@ -25,7 +25,7 @@ private:
 	FileParserUtils& operator=(const FileParserUtils&) = delete;
 
 	static FileParserUtils* instance;
-	MalwareDetectionEngine malDetEngine = { 0 };
+	ScannerConfig malDetEngine = { 0 };
 
 
 public:

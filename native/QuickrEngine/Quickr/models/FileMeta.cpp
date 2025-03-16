@@ -71,6 +71,7 @@ namespace quickrengine {
         if (!GetFileAttributesExW(filepath.c_str(), GetFileExInfoStandard, &fileData))
         {
             // File not found or inaccessible
+			// std::cout << "File not found or inaccessible" << std::endl;
             return std::make_shared<FileMeta>(FileType::unknown, 0, 0, 0, filepath);
         }
 

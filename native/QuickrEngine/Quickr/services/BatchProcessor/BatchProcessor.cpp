@@ -22,7 +22,7 @@ namespace quickrengine {
 			}
 
 			while (running) {
-				auto fileData = resultQueue->frontWithTimeout(std::chrono::milliseconds(10000));
+				auto fileData = resultQueue->frontWithTimeout(std::chrono::milliseconds(10));
 				if (fileData.has_value()) {
 					auto fileEntry = fileData.value();
 					if (fptr) {

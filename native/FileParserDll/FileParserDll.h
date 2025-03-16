@@ -12,15 +12,15 @@
 #include "FeatureExtractor/FeatureHeader.h"
 
 // Fileparser Function Wrapper For DLL
-__declspec(dllexport)int  initPEParserDWrapper(MalwareDetectionEngine* malDetEngine, wchar_t*);
+__declspec(dllexport)int  initPEParserDWrapper(wchar_t*);
 
-__declspec(dllexport) struct PEImgDetails* startPEDWrapper(wchar_t*, MalwareDetectionEngine* malDetEngine);
+__declspec(dllexport) struct PEImgDetails* startPEDWrapper(wchar_t*, ScannerConfig* malDetEngine);
 
 __declspec(dllexport) void printImgDetailsDWrapper(struct PEImgDetails*, int);
 
 __declspec(dllexport) void freeImgDetailsDWrapper(struct PEImgDetails*);
 
-__declspec(dllexport) int getAllFilesFileParserDWrapperW(wchar_t* rootDir, BOOL subDirectories, MalwareDetectionEngine* malDetEngine, int printDetails);
+__declspec(dllexport) int getAllFilesFileParserDWrapperW(wchar_t* rootDir, BOOL subDirectories, ScannerConfig* malDetEngine, int printDetails);
 
 __declspec(dllexport) int freePEParserStructDWrapper(Tree_t**, struct ExtNode**, struct hashTableMalwareFullFunc*);
 
