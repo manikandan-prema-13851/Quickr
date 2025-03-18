@@ -60,6 +60,9 @@
     <ClCompile Include="Quickr\scanner\PEScanner.cpp">
       <Filter>Source Files\Components\scanner</Filter>
     </ClCompile>
+    <ClCompile Include="Quickr\workers\WatchdogWorker.cpp">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Quickr\QuickrEngine.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Quickr\scanner\PEScanner.h">
       <Filter>Source Files\Components\scanner</Filter>
+    </ClInclude>
+    <ClInclude Include="Quickr\workers\WatchdogWorker.h">
+      <Filter>Source Files\Components\workers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

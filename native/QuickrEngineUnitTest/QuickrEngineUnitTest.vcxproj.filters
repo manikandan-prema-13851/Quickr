@@ -19,6 +19,9 @@
     <ClCompile Include="QueueTest.cpp">
       <Filter>Source Files\Components\queue</Filter>
     </ClCompile>
+    <ClCompile Include="WatchdogWorkerTest.cpp">
+      <Filter>Source Files\Components\workers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

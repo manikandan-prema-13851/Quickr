@@ -1,16 +1,19 @@
 #include "WorkerManager.h"
+
 namespace quickrengine {
 
-    WorkerManager::WorkerManager()
-        : resultQueue(std::make_shared<queue::Queue<std::shared_ptr<FileMeta>>>()),
-        fileWorkQueue(std::make_shared<queue::Queue<std::wstring>>())
-    {
-        
+    WorkerManager::WorkerManager() {
+        resultQueue = std::make_shared<queue::Queue<std::shared_ptr<FileMeta>>>();
+        fileWorkQueue = std::make_shared<queue::Queue<std::wstring>>();
     }
 
-    size_t WorkerManager::getNumWorkers() const
-    {
-        return workerThreads.size();
+    WorkerManager::~WorkerManager() {
+        stop();
+        join();
+    }
+
+    size_t WorkerManager::getNumWorkers() const {
+        return workers.size();
     }
 
     void WorkerManager::start(unsigned int wantedWorkers)
@@ -27,12 +30,23 @@ namespace quickrengine {
             auto thread = std::thread(&Worker::start, worker.get());
             workerThreads.push_back(std::move(thread));
         }
+
+        watchdog = std::make_unique<WatchdogWorker>(workers, workerTimeout);
+
+        watchdogThread = std::thread([this]() {
+            watchdog->start();
+            });
+
     }
 
-    void WorkerManager::stop()
-    {
-        for (const auto& worker : workers)
-        {
+    void WorkerManager::stop() {
+        // Stop the watchdog
+        if (watchdog) {
+            watchdog->stop();
+        }
+
+        // Stop all workers
+        for (auto& worker : workers) {
             worker->stop();
         }
 
@@ -42,32 +56,37 @@ namespace quickrengine {
         workerThreads.clear();
     }
 
-    void WorkerManager::join()
-    {
-        for (auto& workerThread : workerThreads)
-        {
-            workerThread.join();
+    void WorkerManager::join() {
+        // Join watchdog thread
+        if (watchdogThread.joinable()) {
+            watchdogThread.join();
+        }
+
+        // Join worker threads
+        for (auto& thread : workerThreads) {
+            if (thread.joinable()) {
+                thread.join();
+            }
         }
     }
 
-    void WorkerManager::scan(const std::wstring& filepath) const
-    {
+    void WorkerManager::scan(const std::wstring& filepath) const {
         fileWorkQueue->push(filepath);
     }
 
-    unsigned long WorkerManager::getFilesProcessed() const
-    {
-        unsigned long filesProcessed = 0;
-        for (const auto& worker : workers)
-        {
-            filesProcessed += worker->getFilesProcessed();
-        }
-        return filesProcessed;
+    std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> WorkerManager::getResultQueue() {
+        return resultQueue;
     }
 
+    unsigned long WorkerManager::getFilesProcessed() const {
+        unsigned long total = 0;
+        for (const auto& worker : workers) {
+            total += worker->getFilesProcessed();
+        }
+        return total;
+    }
 
-    std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> WorkerManager::getResultQueue()
-    {
-        return resultQueue;
+    size_t WorkerManager::getWatchdogRestartCount() const {
+        return watchdog ? watchdog->getRestartCount() : 0;
     }
 }
