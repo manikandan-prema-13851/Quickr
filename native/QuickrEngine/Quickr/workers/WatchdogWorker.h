@@ -6,12 +6,18 @@
 #include <atomic>
 #include <chrono>
 #include <thread>
+#include <functional>
 #include "Worker.h"
 
 namespace quickrengine {
+    using ThreadRestartCallback = std::function<void(int)>;
+
+
     class WatchdogWorker {
     public:
-        WatchdogWorker(std::vector<std::shared_ptr<Worker>>& workers, std::chrono::seconds timeout = std::chrono::seconds(30));
+        WatchdogWorker(std::vector<std::shared_ptr<Worker>>& workers,
+            ThreadRestartCallback restartCallback,
+            std::chrono::seconds timeout = std::chrono::seconds(30));
 
         void start();
         void stop();
@@ -21,6 +27,7 @@ namespace quickrengine {
 
     private:
         std::vector<std::shared_ptr<Worker>>& workers;
+        ThreadRestartCallback restartCallback;
         std::chrono::seconds timeout;
         std::atomic<bool> running{ false };
         std::atomic<size_t> restartCount{ 0 };

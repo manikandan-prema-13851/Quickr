@@ -29,6 +29,7 @@
     <ClCompile Include="Quickr\workers\WorkerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="quickengine_version.h" />
     <ClInclude Include="Quickr\models\FileMeta.h" />
     <ClInclude Include="Quickr\queue\Queue.h" />
     <ClInclude Include="Quickr\QuickrEngine.h" />

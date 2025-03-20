@@ -1,6 +1,7 @@
 
 
 #include "BatchProcessor.h"
+#include "../QuickrEngine/quickengine_version.h"
 #include <fstream>
 
 namespace quickrengine {
@@ -8,6 +9,10 @@ namespace quickrengine {
 	namespace services {
 
 		BatchProcessor::BatchProcessor(const std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> queue) :resultQueue(queue), running(true) {
+		}
+
+		void BatchProcessor::stop() {
+			running = false;
 		}
 
 		void BatchProcessor::run() {
@@ -43,7 +48,7 @@ namespace quickrengine {
 				fclose(fptr);
 			}
 
-			std::wcout << "Total Files: " << count<<std::endl;
+			DEBUG_MSG("Total Files: " << count);
 		}
 
 	}

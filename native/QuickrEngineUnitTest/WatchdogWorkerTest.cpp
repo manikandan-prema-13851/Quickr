@@ -8,87 +8,53 @@
 
 using namespace quickrengine;
 
-// Create a test version of Worker that simulates taking too long to process files
-class SlowWorker : public Worker {
+
+class TestWorkerManager : public WorkerManager {
 public:
-    SlowWorker(std::shared_ptr<queue::Queue<std::wstring>> queue,
-        std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> rqueue,
-        long long id)
-        : Worker(queue, rqueue, id) {
-    }
+    TestWorkerManager() : WorkerManager() {}
 
-    void processEntry(std::wstring& file) override {
-        
+    // Override to create SlowWorkers
+    void start(unsigned int wantedWorkers) {
+        stop();
+
+        for (unsigned int i = 0; i < wantedWorkers; i++)
         {
-            processing = true;
-            taskStartTime = std::chrono::steady_clock::now();
+            HANDLE threadHandle = createWorkerThread(i);
+            workerThreads.push_back(threadHandle);
         }
 
-        if (file.find(L"hang") != std::wstring::npos) {
-            std::this_thread::sleep_for(std::chrono::seconds(40));
-        }
-    
-        {
-            processing = false;
-        }
+        // Create a thread restart callback
+        ThreadRestartCallback callback = [this](int workerIndex) {
+            this->handleThreadRestart(workerIndex);
+            };
 
-    }
+        // Create watchdog with short timeout
+        watchdog = std::make_unique<WatchdogWorker>(workers, callback, std::chrono::seconds(1));
 
-    void start() {
-        running = true;
-
-        while (running)
-        {
-            assert(workQueue != nullptr);
-
-            auto maybeFile = workQueue->frontWithTimeout(std::chrono::milliseconds(10));
-            // handle worker queue 
-            if (maybeFile)
-            {
-                auto file = maybeFile.value();
-                processEntry(file);
-            }
-            else {
-                running = false;
-            }
-        }
+        watchdogThread = CreateThread(
+            NULL, 0,
+            [](LPVOID param) -> DWORD {
+                reinterpret_cast<WatchdogWorker*>(param)->start();
+                return 0;
+            },
+            watchdog.get(),
+            0, NULL
+        );
     }
 };
 
-class WatchdogTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        workQueue = std::make_shared<queue::Queue<std::wstring>>();
-        resultQueue = std::make_shared<queue::Queue<std::shared_ptr<FileMeta>>>();
-        watchdogTimeout = std::chrono::seconds(20);
-    }
+TEST(WorkerManagerTest, WatchdogIntegration) {
+    TestWorkerManager manager;
+    manager.start(1);
 
-    std::shared_ptr<queue::Queue<std::wstring>> workQueue;
-    std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> resultQueue;
-    std::chrono::seconds watchdogTimeout;
-};
+    std::wstring hangFile = L"/System/hang/Data";
+    manager.scan(hangFile);
 
-TEST_F(WatchdogTest, DetectsAndRestartsHungWorker) {
-    std::vector<std::shared_ptr<Worker>> workers;
+    std::this_thread::sleep_for(std::chrono::seconds(10));
 
-    // Use our SlowWorker instead of regular Worker
-    auto worker = std::make_shared<SlowWorker>(workQueue, resultQueue, 0);
-    workers.push_back(worker);
-    WatchdogWorker watchdog(workers, watchdogTimeout);
-    std::thread watchdogThread([&]() {
-        watchdog.start();
-        });
+    EXPECT_GT(manager.getWatchdogRestartCount(), 0);
 
-    // Start the worker
-    std::wstring hangFile = L"test_hang_file.txt";
-    workQueue->push(hangFile);
-
-    worker->start();
-    // Need to wait longer than the watchdog timeout
-    std::this_thread::sleep_for(watchdogTimeout + std::chrono::seconds(60));
-
-    watchdog.stop();
-    worker->stop();
-    watchdogThread.join();
-    EXPECT_GT(watchdog.getRestartCount(), 0);
+    // Clean up
+    manager.stop();
+    manager.join();
 }

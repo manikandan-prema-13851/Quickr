@@ -17,7 +17,6 @@ namespace quickrengine {
 
         virtual void start();
         void stop();
-        virtual void processEntry(std::wstring& file);
         unsigned long getFilesProcessed();
 
         // New methods for watchdog functionality
@@ -30,7 +29,12 @@ namespace quickrengine {
         std::shared_ptr<queue::Queue<std::wstring>> getWorkQueue() const { return workQueue; }
         std::shared_ptr<queue::Queue<std::shared_ptr<FileMeta>>> getResultQueue() const { return resultQueue; }
 
-    protected:
+
+        std::optional<std::wstring> getCurrentFile() const;
+        void processEntry(std::wstring& file);
+
+
+    private:
         std::atomic<bool> running{ false };
         std::atomic<bool> processing{ false }; // Indicates if currently processing a file
         std::atomic<unsigned long> filesProcessed{ 0 };
@@ -40,10 +44,9 @@ namespace quickrengine {
 
         std::shared_ptr<queue::Queue<std::wstring>> workQueue{ nullptr };
         std::shared_ptr<queue::Queue<std::shared_ptr<quickrengine::FileMeta>>> resultQueue{ nullptr };
-
-    private:
         // Task timing tracking
         mutable std::mutex timeMutex;
+        std::wstring currentFile;
     };
 }
 

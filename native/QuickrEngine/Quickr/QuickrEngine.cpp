@@ -1,5 +1,6 @@
 #include <thread>
 #include "QuickrEngine.h"
+#include "..\quickengine_version.h"
 
 namespace quickrengine {
 	QuickrEngine::QuickrEngine() : batchProcessorWorker(manager.getResultQueue()) {

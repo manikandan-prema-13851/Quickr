@@ -16,7 +16,7 @@ namespace quickrengine::services {
 		~BatchProcessor()
 		{
 		};
-
+		void stop();
 		void run();
 
 	private:

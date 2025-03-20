@@ -1,4 +1,5 @@
 #include "Worker.h"
+#include "../QuickrEngine/quickengine_version.h"
 #include <thread>
 
 namespace quickrengine {
@@ -17,7 +18,7 @@ namespace quickrengine {
         {
             assert(workQueue != nullptr);
 
-            auto maybeFile = workQueue->frontWithTimeout(std::chrono::milliseconds(10));
+            auto maybeFile = workQueue->frontWithTimeout(std::chrono::milliseconds(1));
             // handle worker queue 
             if (maybeFile)
             {
@@ -25,7 +26,10 @@ namespace quickrengine {
                 processEntry(file);
             }
             else {
-                running = false;
+                std::lock_guard<std::mutex> lock(timeMutex);
+                taskStartTime = std::chrono::steady_clock::now();
+                currentFile.clear(); // Store the current file
+                processing = false;
             }
         }
     }
@@ -36,10 +40,19 @@ namespace quickrengine {
             // Update the task start time when starting to process a file
             std::lock_guard<std::mutex> lock(timeMutex);
             taskStartTime = std::chrono::steady_clock::now();
+            currentFile = _filePath; // Store the current file
             processing = true;
         }
-        if (_filePath == L"/System/Volumes/Data")
+        if (_filePath == L"/System/hang/Data")
         {
+#ifdef TEST_MODE
+            DEBUG_MSG (L"Test Mode: In /System/Volumes/Data")
+
+            if (_filePath.find(L"hang") != std::wstring::npos) {
+                    std::this_thread::sleep_for(std::chrono::seconds(31));
+            }
+
+#endif
             std::shared_ptr<FileMeta> fileEntry = std::make_shared<FileMeta>();
             fileEntry->size = 0;
             fileEntry->filepath = _filePath;
@@ -66,6 +79,7 @@ namespace quickrengine {
         {
             std::lock_guard<std::mutex> lock(timeMutex);
             processing = false;
+            currentFile.clear();
         }
     }
 
@@ -75,6 +89,16 @@ namespace quickrengine {
 
     unsigned long Worker::getFilesProcessed() {
         return filesProcessed;
+    }
+
+
+
+    std::optional<std::wstring> Worker::getCurrentFile() const {
+        std::lock_guard<std::mutex> lock(timeMutex);
+        if (processing && !currentFile.empty()) {
+            return currentFile;
+        }
+        return std::nullopt;
     }
 
     bool Worker::isHung(const std::chrono::seconds& timeout) const {
@@ -88,14 +112,14 @@ namespace quickrengine {
         auto flag = duration > timeout; 
         auto temp = taskStartTime;
         //Debugging All Values
-        std::wcout << L"---------------------- DEBUG OUTPUT ----------------------\n";
-        std::wcout << L"taskStartTime: " << taskStartTime.time_since_epoch().count() << L" ticks\n";
-        std::wcout << L"now:           " << now.time_since_epoch().count() << L" ticks\n";
-        std::wcout << L"duration:      " << duration.count() << L" seconds\n";
-        std::wcout << L"timeout:       " << timeout.count() << L" seconds\n";
-        std::wcout << L"flag:          " << flag << L"\n"; // true (1) or false (0)
-        std::wcout << L"temp:          " << temp.time_since_epoch().count() << L" ticks\n";
-        std::wcout << L"---------------------------------------------------------\n";
+        DEBUG_MSG(L"---------------------- DEBUG OUTPUT ----------------------");
+        DEBUG_MSG(L"taskStartTime: " << taskStartTime.time_since_epoch().count() << L" ticks");
+        DEBUG_MSG(L"now:           " << now.time_since_epoch().count() << L" ticks");
+        DEBUG_MSG(L"duration:      " << duration.count() << L" seconds");
+        DEBUG_MSG(L"timeout:       " << timeout.count() << L" seconds");
+        DEBUG_MSG(L"flag:          " << flag << L""); // true (1) or false (0)
+        DEBUG_MSG(L"temp:          " << temp.time_since_epoch().count() << L" ticks");
+        DEBUG_MSG(L"---------------------------------------------------------");
 
 
         return duration > timeout;

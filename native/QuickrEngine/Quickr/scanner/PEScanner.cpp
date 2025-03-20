@@ -18,7 +18,7 @@ namespace quickrengine {
 		}
 		else {
 			ready = false;
-			std::wcout << L"PEScanner Service Not Available" << std::endl;
+			DEFAULT_MSG(L"PEScanner Service Not Available");
 		}
 		return ready;
 	}

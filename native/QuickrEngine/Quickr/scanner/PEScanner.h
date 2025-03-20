@@ -8,6 +8,7 @@ extern "C"
     #include "FeatureExtractor/FeatureHeader.h"
 }
 
+#include "../QuickrEngine/quickengine_version.h"
 #pragma comment(lib, "Crypt32.lib")
 #pragma comment(lib, "Bcrypt.lib")
 #pragma comment(lib, "Wintrust.lib")

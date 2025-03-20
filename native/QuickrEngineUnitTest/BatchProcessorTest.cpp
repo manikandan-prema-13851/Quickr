@@ -52,6 +52,7 @@ TEST(AggregationWorker, Init) {
 
     rWorker.run();
     quickrengine::test::removeDirectory(tmpDir);
+    rWorker.stop();
 
 }
 

@@ -92,5 +92,8 @@
     <ClInclude Include="Quickr\workers\WatchdogWorker.h">
       <Filter>Source Files\Components\workers</Filter>
     </ClInclude>
+    <ClInclude Include="quickengine_version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
